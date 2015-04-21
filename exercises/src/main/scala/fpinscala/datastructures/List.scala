@@ -95,15 +95,24 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def length3[A](l: List[A]): Int = foldLeft(l, 0)((acc, _) => acc + 1)
 
-  def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((h, t) => Cons(t, h))
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, List[A]())((h, t) => Cons(t, h))
 
-  def appendFolding[A](l: List[A], m: List[A]): List[A] = foldRight(l, m)(Cons(_,_))
+  def appendFolding[A](l: List[A], m: List[A]): List[A] =
+    foldRight(l, m)(Cons(_,_))
 
   def concat[A](l: List[List[A]]): List[A] = foldRight(l, Nil:List[A])(append)
 
-  def add1(l: List[Int]): List[Int] = foldRight(l, Nil:List[Int])((h,t) => Cons(h + 1, t))
+  def add1(l: List[Int]): List[Int] =
+    foldRight(l, Nil:List[Int])((h,t) => Cons(h + 1, t))
 
-  def doublesToStrings(l: List[Double]): List[String] = foldRight(l, Nil:List[String])((h, t) => Cons(h.toString, t))
+  def doublesToStrings(l: List[Double]): List[String] =
+    foldRight(l, Nil:List[String])((h, t) => Cons(h.toString, t))
 
-  def map[A,B](l: List[A])(f: A => B): List[B] = foldRight(l, Nil:List[B])((h,t) => Cons(f(h), t))
+  def map[A,B](l: List[A])(f: A => B): List[B] =
+    foldRight(l, Nil:List[B])((h,t) => Cons(f(h), t))
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = 
+    foldRight(as, Nil:List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+
 }
